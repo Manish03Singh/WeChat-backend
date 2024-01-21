@@ -8,20 +8,16 @@ const socket = require('socket.io');
 
 require('dotenv').config();
 
-app.use(
-    cors({
-      origin: [process.env.CLIENT_URL],
-      methods: ["GET", "POST"],
-      credentials: true,
-    })
-  );
+app.use(cors());
 app.use(express.json());
 app.use("/api/auth", userRoute)
 app.use("/api/messages", MsgRoute)
-// app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', process.env.CLIENT_URL);
-//     next();
-//   });
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 
 mongoose.connect(process.env.MONNGO_DB_URL,{
