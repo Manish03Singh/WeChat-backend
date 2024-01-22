@@ -35,10 +35,12 @@ const server = app.listen(port,() => {
     console.log(`Server is running on port ${port}`);
 });
 
+console.log(server)
 const io = socket(server, {
     cors : {
         origin : process.env.CLIENT_URL,
         credentials: true,
+        methods: ["GET", "POST"],
     }
 });
 
